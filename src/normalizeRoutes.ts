@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash"
-import winPath from "./utils/winPath"
 import { join } from "path-browserify"
+
+import winPath from "./utils/winPath"
 
 import type { PPRoute, PPRoutes } from "./"
 

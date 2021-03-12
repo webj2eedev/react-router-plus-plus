@@ -1,13 +1,15 @@
 import React, { useState, useRef, Component } from "react";
-import { PPBrowserRouter } from "../../src";
+import { PPBrowserRouter, useQuery } from "../../src";
 import type { PPRoutes } from "../../src";
 
 import "./style/index.css";
 
 const routes: PPRoutes = [{
-  path: "/login",
+  path: "/",
   component: function(){
-    return <h1>login</h1>
+    const query = useQuery();
+
+    return <h1>login, {JSON.stringify(query)}</h1>
   }
 },{
   path: "/logout",

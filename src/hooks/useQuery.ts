@@ -1,10 +1,14 @@
 import { useLocation } from "react-router-dom"
-import url from 'url'
+import URLSearchParams from '@ungap/url-search-params'
 
 export default function useQuery() {
     const location = useLocation();
 
-    const query = url.parse(location.search, true);
+    const params = new URLSearchParams(location.search);
+    const query = {};
+    for (const [key, value] of params) {
+        query[key] = value;
+    }
 
     return query;
 }
