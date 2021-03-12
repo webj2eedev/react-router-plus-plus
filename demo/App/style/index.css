@@ -1,0 +1,7 @@
+.app {
+    position: relative;
+    width: 1024px;
+    height: 768px;
+
+    overflow: auto;
+}
