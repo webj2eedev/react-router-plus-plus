@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash"
-import winPath from "./winPath"
+import winPath from "./utils/winPath"
 import { join } from "path"
 
 import type { PPRoute, PPRoutes } from "./"
