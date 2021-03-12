@@ -6,14 +6,14 @@ import "./style/index.css";
 
 const routes: PPRoutes = [{
   path: "/",
-  component: function(){
+  component: function () {
     const query = useQuery();
 
     return <h1>login, {JSON.stringify(query)}</h1>
   }
-},{
+}, {
   path: "/logout",
-  component: function(){
+  component: function () {
     return <h1>logout</h1>
   }
 }];
