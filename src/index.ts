@@ -1,9 +1,26 @@
-import normalizeRoutes from "./normalizeRoutes"
-import {default as innerRenderRoutes}  from "./renderRoutes"
+/*
+ * react-router-dom
+ */
+// router
+export { BrowserRouter, HashRouter, Link, Prompt, Redirect, Route, Switch, withRouter } from "react-router-dom"
 
-export * from "react-router-dom"
+// hooks
+export { useHistory, useLocation, useParams, useRouteMatch } from "react-router-dom"
 
-export interface MxRoute {
+
+/*
+ * extend
+ */
+// router
+export { default as PPBrowserRouter } from "./PPBrowserRouter"
+
+// hooks
+export { default as useQuery } from "./hooks/useQuery"
+
+/*
+ * interface
+ */
+export interface PPRoute {
     // react
     key?: any;
 
@@ -16,7 +33,7 @@ export interface MxRoute {
     name?: string;
 
     // 嵌套路由
-    routes?: MxRoutes;
+    routes?: PPRoutes;
 
     // 匹配策略
     exact?: boolean; // 表示是否严格匹配，即 location 是否和 path 完全对应上
@@ -33,15 +50,12 @@ export interface MxRoute {
         hideInMenu?: false,
         breadcrumb: false,
 
-        [properties:string]:any;
+        [properties: string]: any;
     }
 
     // 配置路由的高阶组件封装
     wrappers?: any[];
 }
 
-export type MxRoutes = Array<MxRoute>;
+export type PPRoutes = Array<PPRoute>;
 
-export function renderRoutes(routes: MxRoutes){
-    return innerRenderRoutes(normalizeRoutes(routes))
-}

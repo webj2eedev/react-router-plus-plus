@@ -1,22 +1,23 @@
-import {MxRoute, MxRoutes} from "./"
-import {cloneDeep} from "lodash"
+import { cloneDeep } from "lodash"
 import winPath from "./winPath"
-import {join} from "path"
+import { join } from "path"
 
-export default function normalizeRoutes(routes: MxRoutes) {
+import type { PPRoute, PPRoutes } from "./"
+
+export default function normalizeRoutes(routes: PPRoutes) {
     // 避免修改配置里的 routes，导致重复 patch
     let newRoutes = cloneDeep(routes);
     patchRoutes(newRoutes);
     return newRoutes;
 }
 
-function patchRoutes(routes: MxRoutes, parentRoute?:MxRoute) {
+function patchRoutes(routes: PPRoutes, parentRoute?: PPRoute) {
     for (const route of routes) {
         patchRoute(route, parentRoute);
     }
 }
 
-function patchRoute(route: MxRoute, parentRoute?:MxRoute) {
+function patchRoute(route: PPRoute, parentRoute?: PPRoute) {
     // route.path 的修改需要在子路由 patch 之前做
     if (
         route.path &&
