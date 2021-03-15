@@ -33,7 +33,7 @@ export interface PPRoute {
     name?: string;
 
     // 嵌套路由
-    routes?: PPRoutes;
+    children?: PPRoutes;
 
     // 匹配策略
     exact?: boolean; // 表示是否严格匹配，即 location 是否和 path 完全对应上

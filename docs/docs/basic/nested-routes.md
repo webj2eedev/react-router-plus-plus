@@ -75,7 +75,7 @@ export default () => {
     const routes = [{
         path: "/",
         component: Layout,
-        routes: [{
+        children: [{
             path: "/home",
             component: Home
         },{

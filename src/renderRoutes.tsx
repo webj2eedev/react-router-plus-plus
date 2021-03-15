@@ -16,7 +16,7 @@ function CustomRouteComponent(props: {
     component: Component = EMPTY_COMPONENT,
     props: customRouteComponentProps,
     wrappers,
-    routes = [],
+    children = [],
   } = route;
 
   // 路由传参
@@ -40,7 +40,7 @@ function CustomRouteComponent(props: {
 
   // @ts-ignore
   let wrappedComponent = (
-    <Component {...newProps}>{renderRoutes(routes)}</Component>
+    <Component {...newProps}>{renderRoutes(children)}</Component>
   );
 
   if (wrappers) {
@@ -70,7 +70,7 @@ function RouteWithSubRoutes(props: RouteWithSubRoutesProps) {
   if (redirect) {
     return <Redirect exact={exact} strict={strict} from={path} to={redirect} />;
   } else {
-    if (route.routes) {
+    if (route.children) {
       return (
         <Route
           exact={exact}

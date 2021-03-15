@@ -33,8 +33,8 @@ function patchRoute(route: PPRoute, parentRoute?: PPRoute) {
         );
     }
 
-    if (route.routes) {
-        patchRoutes(route.routes, route);
+    if (route.children) {
+        patchRoutes(route.children, route);
     } else {
         if (!('exact' in route)) {
             // exact by default
