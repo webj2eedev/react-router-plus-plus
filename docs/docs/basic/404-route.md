@@ -1,12 +1,13 @@
 ---
 title: (BUG)404 Not found 路由
+order: 6
 group:
     title: 基础
-    order: 5
+    order: 4
 ---
 
 
-# 404 Not found 路由
+# (BUG)404 Not found 路由
 
 常规参数只会匹配被 / 分隔的 URL 片段中的字符。我们可以使用通配符 (*) 匹配任意路径：
 
