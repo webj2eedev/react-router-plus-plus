@@ -8,6 +8,8 @@ group:
 
 # 嵌套路由
 
+## 基础
+
 实际生活中的应用界面，通常由多层嵌套的组件组合而成。同样地，URL 中各段动态路径也按某种结构对应嵌套的各层组件，例如：
 
 ~~~
@@ -167,3 +169,27 @@ export default () => {
     );
 };
 ```
+
+## 相对路径
+
+在嵌套路由中的子路由中，可以使用相对路径，有助于减小配置压力与维护成本。
+
+~~~js
+[{
+    path: '/',
+    component: BasicLayout,
+    routes: [
+        {
+            path: '/',            
+            redirect: 'home' // 重定向，也可以使用相对路径
+        },
+        {
+            path: 'home', // 相对路径，相对于根目录 /home
+            component: Home,
+        },{
+            path: 'person', // 相对路径，相对于根目录 /person
+            component: Person,
+        },
+    ]
+}]
+~~~
