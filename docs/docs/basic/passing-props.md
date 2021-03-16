@@ -41,10 +41,27 @@ const Student = (props) => {
 
 在组件中使用 `useParams()` 会使之与其对应路由形成高度耦合，从而使组件只能在某些特定的 URL 上使用，限制了其灵活性。
 
-如果 props 被设置为 true，`useParams()` 中的路径参数会被映射为组件参数。
+如果 props 被设置为 `true`，`useParams()` 中的路径参数会被***自动***映射为组件参数，
 
+~~~js
+{
+    path: "/teacher/:id/:classes",
+    component: Teacher,
+    props: true,
+}
+~~~
 
+这样组件可以直接通过 `props` 获取参数，而不需要耦合路由API `useParams()`，增大了灵活性。
 
+~~~js
+const Teacher = (props) => {
+    return (
+        <h1>
+            Teacher {props.id} today has {props.num} classes!           
+        </h1>
+    )
+}
+~~~
 
 ## 静态组件参数
 
@@ -73,7 +90,7 @@ const Person = (props) => {
 }
 ~~~
 
-## 示例
+## 综合示例
 
 ```jsx
 /**
@@ -152,7 +169,8 @@ export default () => {
             component: Student
         },{
             path: "/teacher/:id/:classes",
-            component: Teacher
+            component: Teacher,
+            props: true,
         }]
     }];
 
