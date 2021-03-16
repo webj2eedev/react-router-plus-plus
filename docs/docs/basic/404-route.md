@@ -1,6 +1,6 @@
 ---
 title: (BUG)404 Not found 路由
-order: 6
+order: 7
 group:
     title: 基础
     order: 4
