@@ -62,6 +62,10 @@ unlisten();
 
 ## Components
 
+### PPBrowserRouter
+
+### PPHashRouter
+
 ### Link
 
 链接组件，例如：
@@ -125,6 +129,9 @@ export default () => {
 };
 ~~~
 
+> 注：此接口从 `react-router` 中原生导出
+
+
 ### NavLink
 
 特殊版本的 `<Link />` 。当指定路由（`to=指定路由`）命中时，可以附着特定样式。
@@ -183,6 +190,8 @@ export default () => {
 };
 ~~~
 
+> 注：此接口从 `react-router` 中原生导出
+
 
 ### Prompt
 
@@ -209,8 +218,10 @@ export default () => {
     </div>
   );
 };
-
 ~~~
+
+> 注：此接口从 `react-router` 中原生导出
+
 
 ### withRouter
 
@@ -231,6 +242,8 @@ export default withRouter(({ history, location, match }) => {
   );
 });
 ~~~
+
+> 注：此接口从 `react-router` 中原生导出
 
 
 ## Hooks
@@ -339,3 +352,37 @@ export default () => {
 ~~~
 
 > 此接口由 `ReactRouter++` 扩展
+
+
+## Ohters
+
+### BrowserRouter
+
+> 注：此接口从 `react-router` 中原生导出
+
+
+### HashRouter
+
+> 注：此接口从 `react-router` 中原生导出
+
+
+### MemoryRouter
+
+> 注：此接口从 `react-router` 中原生导出
+
+### Router
+
+> 注：此接口从 `react-router` 中原生导出
+
+
+### createBrowserHistory
+
+> 注：此接口从 `history` 中原生导出
+
+### createHashHistory
+
+> 注：此接口从 `history` 中原生导出
+
+### createMemoryHistory
+
+> 注：此接口从 `history` 中原生导出

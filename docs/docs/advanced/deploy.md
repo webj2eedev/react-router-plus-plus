@@ -1,6 +1,6 @@
 ---
 title: 部署与路由配置
-order: 4
+order: 5
 group:
     title: 进阶
     order: 5

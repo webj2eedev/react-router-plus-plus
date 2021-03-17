@@ -2,11 +2,15 @@
  * react-router-dom
  */
 // router
-export { BrowserRouter, HashRouter, Link, NavLink, Prompt, Redirect, Route, Switch, withRouter } from "react-router-dom"
+export { Router, BrowserRouter, HashRouter, MemoryRouter, Link, NavLink, Prompt, Redirect, Route, Switch, withRouter } from "react-router-dom"
 
 // hooks
 export { useHistory, useLocation, useParams, useRouteMatch } from "react-router-dom"
 
+/*
+ * history
+ */
+export {createBrowserHistory, createHashHistory, createMemoryHistory} from "history"
 
 /*
  * extend
