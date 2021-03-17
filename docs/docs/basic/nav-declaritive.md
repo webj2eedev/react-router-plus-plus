@@ -10,6 +10,8 @@ group:
 
 最基本的导航方式，就是使用 ReactRouter++ 导出的 `<Link to={...}>` 组件实现声明式导航
 
+通过 `Link` 使用，通常作为 React 组件使用。
+
 ~~~js
 import {Link} from "react-router-plus-plus"
 
