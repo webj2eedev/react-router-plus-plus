@@ -1,5 +1,3 @@
-/* @flow */
-
 import { _Vue } from '../install'
 import type Router from '../index'
 import { inBrowser } from '../util/dom'
