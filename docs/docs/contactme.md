@@ -5,6 +5,10 @@ order: 8
 
 # 联系我
 
+## GitHub
+
+请访问 [GitHub](https://github.com/webj2eedev/react-router-plus-plus)
+
 ## 公众号
 
 欢迎关注微信公众号 "WEBJ2EE"，这里有很多前端开发小干货：
