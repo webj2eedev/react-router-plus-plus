@@ -3,12 +3,12 @@ import { Route, Switch, Redirect, useParams } from "react-router-dom";
 import { RouteComponentProps } from "react-router-dom";
 import ErrorBoundary from "./ErrorBoundary";
 
-import type { PPRoute, PPRoutes } from "./";
+import type { RouteConfig, RouteConfigs } from "./types";
 
 const EMPTY_COMPONENT = (props) => props.children; // 二级有子路由，但是没有 component，保证三级正常渲染
 
 function CustomRouteComponent(props: {
-  route: Exclude<PPRoute, "key">;
+  route: Exclude<RouteConfig, "key">;
   routeComponentProps: RouteComponentProps<any>;
 }) {
   const { route, routeComponentProps } = props;
@@ -57,7 +57,7 @@ function CustomRouteComponent(props: {
 }
 
 interface RouteWithSubRoutesProps {
-  route: Exclude<PPRoute, "key">;
+  route: Exclude<RouteConfig, "key">;
   path: string;
 }
 
@@ -112,7 +112,7 @@ function RouteWithSubRoutes(props: RouteWithSubRoutesProps) {
   }
 }
 
-export default function renderRoutes(routes: PPRoutes) {
+export default function renderRoutes(routes: RouteConfigs) {
   return routes ? (
     <Switch>
       {routes.map((route, index) => {

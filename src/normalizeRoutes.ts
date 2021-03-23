@@ -3,22 +3,22 @@ import { join } from "path-browserify"
 
 import winPath from "./utils/winPath"
 
-import type { PPRoute, PPRoutes } from "./"
+import type { RouteConfig, RouteConfigs } from "./types"
 
-export default function normalizeRoutes(routes: PPRoutes) {
+export default function normalizeRoutes(routes: RouteConfigs) {
     // 避免修改配置里的 routes，导致重复 patch
     let newRoutes = cloneDeep(routes);
     patchRoutes(newRoutes);
     return newRoutes;
 }
 
-function patchRoutes(routes: PPRoutes, parentRoute?: PPRoute) {
+function patchRoutes(routes: RouteConfigs, parentRoute?: RouteConfig) {
     for (const route of routes) {
         patchRoute(route, parentRoute);
     }
 }
 
-function patchRoute(route: PPRoute, parentRoute?: PPRoute) {
+function patchRoute(route: RouteConfig, parentRoute?: RouteConfig) {
     // route.path 的修改需要在子路由 patch 之前做
     if (
         route.path &&

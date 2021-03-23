@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import type { BrowserRouterProps } from "react-router-dom";
-import type { PPRoutes } from "./index";
+import type { RouteConfigs } from "./types";
 
 import renderRoutes from "./renderRoutes";
 import normalizeRoutes from "./normalizeRoutes";
 
 export interface PPBrowserRouterProps extends BrowserRouterProps {
-  routes: PPRoutes;
+  routes: RouteConfigs;
   beforeEach?: (to, from, next) => Promise<any>;
 }
 

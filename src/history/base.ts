@@ -1,6 +1,6 @@
 import { _Vue } from '../install'
 import type Router from '../index'
-import { inBrowser } from '../util/dom'
+import { inBrowser } from '../utils/dom'
 import { runQueue } from '../util/async'
 import { warn } from '../util/warn'
 import { START, isSameRoute, handleRouteEntered } from '../util/route'
