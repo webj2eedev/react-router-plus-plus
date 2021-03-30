@@ -130,10 +130,10 @@ export default defineConfig({
       {
         title: '介绍',
         path: '/history/intro',
-        // children: [
-        //   // 菜单子项（可选）
-        //   'intro.md', // 对应的 Markdown 文件，路径是相对于 resolve.includes 目录识别的
-        // ],
+      },
+      {
+        title: 'API',
+        path: '/history/api',
       },
     ]
   },

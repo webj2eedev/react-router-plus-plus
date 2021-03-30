@@ -10,7 +10,7 @@ export { useHistory, useLocation, useParams, useRouteMatch } from "react-router-
 /*
  * history
  */
-export {createBrowserHistory, createHashHistory, createMemoryHistory} from "history"
+export { createBrowserHistory, createHashHistory, createMemoryHistory } from "history"
 
 /*
  * extend
