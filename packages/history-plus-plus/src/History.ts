@@ -113,7 +113,10 @@ export class History {
             onAbort && onAbort(err)
         }
 
-        const queue = []
+        const queue: Array<NavigationGuard> = [].concat(
+            // global before hooks
+            this.beforeHooks
+        )
 
         runQueue<NavigationGuard>(
             queue,
@@ -143,12 +146,18 @@ export class History {
     listen(cb: (r: Route) => void): void {
         this.cb = cb
     }
+    beforeEach(fn: NavigationGuard): () => void {
+        return registerHook<NavigationGuard>(this.beforeHooks, fn)
+    }
+    afterEach(fn: AfterNavigationHook): () => void {
+        return registerHook<AfterNavigationHook>(this.afterHooks, fn)
+    }
     onError(errorCb: ErrorHandler): void {
         this.errorCbs.push(errorCb)
     }
 }
 
-function registerHook(list: Array<any>, fn: Function): Function {
+function registerHook<T>(list: Array<T>, fn: T): () => void {
     list.push(fn)
     return () => {
         const i = list.indexOf(fn)
