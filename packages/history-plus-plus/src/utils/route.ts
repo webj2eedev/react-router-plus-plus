@@ -33,3 +33,12 @@ export function createRoute(
 export const START = createRoute(null, {
     path: '/',
 })
+
+function formatMatch(record: RouteRecord): Array<RouteRecord> {
+    const res = []
+    while (record) {
+        res.unshift(record)
+        record = record.parent
+    }
+    return res
+}

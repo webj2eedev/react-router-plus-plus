@@ -1,6 +1,17 @@
 import React from 'react'
 
-export type QueryObject = Record<string, string | string[]>
+export interface RouterError extends Error {
+    _isRouter: true
+    from: Route
+    to: Route
+    type: number
+}
+
+export type ErrorHandler = (err: Error) => void
+export type TransitionAbortHandler = ErrorHandler
+export type TransitionCompleteHandler = (route: Route) => void
+
+export type QueryObject = Record<string, string | (string | null)[] | null | undefined>
 
 /*
  *  location
@@ -9,7 +20,7 @@ export interface Location {
     name?: string
     path?: string
     hash?: string
-    query?: Record<string, string | (string | null)[] | null | undefined>
+    query?: QueryObject
     params?: Record<string, string>
     append?: boolean
     replace?: boolean
@@ -41,11 +52,8 @@ export type RedirectOption = RawLocation | ((to: Route) => RawLocation)
  * NavigationGuard
  */
 export type NavigationGuardNext = (to?: RawLocation | false | void) => void
-export type NavigationGuard = (
-    to: Route,
-    from: Route,
-    next: NavigationGuardNext
-) => any
+export type NavigationGuard = (to: Route, from: Route, next: NavigationGuardNext) => any
+export type AfterNavigationHook = (to: Route, from: Route) => any
 
 /**
  * RouteConfig、RouteRecord
@@ -82,19 +90,13 @@ export interface RouteRecord {
     redirect?: RedirectOption
     matchAs?: string
     meta: Record<string, any>
-    beforeEnter?: (
-        route: Route,
-        redirect: (location: RawLocation) => void,
-        next: () => void
-    ) => any
+    beforeEnter?: (route: Route, redirect: (location: RawLocation) => void, next: () => void) => any
     props: RoutePropsOptions
 }
 
 /**
  * History
  */
-type ErrorHandler = (err: Error) => void
-
 export interface HistoryOptions {
     basename?: string
 }
@@ -109,16 +111,8 @@ export declare class History {
     forward(): void
 
     push(location: RawLocation): Promise<Route>
-    push(
-        location: RawLocation,
-        onComplete?: (route: Route) => void,
-        onAbort?: ErrorHandler
-    ): void
+    push(location: RawLocation, onComplete?: (route: Route) => void, onAbort?: ErrorHandler): void
 
     replace(location: RawLocation): Promise<Route>
-    replace(
-        location: RawLocation,
-        onComplete?: (route: Route) => void,
-        onAbort?: ErrorHandler
-    ): void
+    replace(location: RawLocation, onComplete?: (route: Route) => void, onAbort?: ErrorHandler): void
 }
