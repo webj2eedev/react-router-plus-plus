@@ -1,5 +1,7 @@
 import React from 'react'
 
+export type QueryObject = Record<string, string | string[]>
+
 /*
  *  location
  */
@@ -98,6 +100,8 @@ export interface HistoryOptions {
 }
 
 export declare class History {
+    base: string
+
     constructor(options?: HistoryOptions)
 
     go(n: number): void
