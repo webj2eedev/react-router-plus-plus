@@ -1,11 +1,3 @@
----
-title: 声明式导航
-order: 2
-group:
-    title: 基础
-    order: 4
----
-
 # 声明式导航
 
 最基本的导航方式，就是使用 ReactRouter++ 导出的 `<Link to={...}>` 组件实现声明式导航

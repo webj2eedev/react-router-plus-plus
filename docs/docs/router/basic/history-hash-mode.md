@@ -1,12 +1,4 @@
----
-title: History、Hash 路由模式
-order: 9
-group:
-    title: 基础
-    order: 4
----
-
-# 路由组件传参
+# History、Hash 路由模式
 
 vue-router 默认 hash 模式 —— 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。
 

@@ -1,11 +1,3 @@
----
-title: 起步
-order: 1
-group:
-    title: 基础
-    order: 4
----
-
 # 起步
 
 [ReactRouter++](https://github.com/webj2eedev/react-router-plus-plus) 主要面向`企业级中后台管理应用`，应用都是单页应用，页面地址的跳转都是在浏览器端完成的，不会重新请求服务端获取 html，html 只在应用初始化时加载一次。所有页面由不同的组件构成，页面的切换其实就是不同组件的切换，你只需要在配置中把不同的路由路径和对应的组件关联上。

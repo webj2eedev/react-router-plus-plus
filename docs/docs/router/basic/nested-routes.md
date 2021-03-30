@@ -1,11 +1,3 @@
----
-title: 嵌套路由
-order: 4
-group:
-    title: 基础
-    order: 4
----
-
 # 嵌套路由
 
 ## 基础

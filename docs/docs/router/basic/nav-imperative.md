@@ -1,11 +1,3 @@
----
-title: 编程式导航
-order: 3
-group:
-    title: 基础
-    order: 4
----
-
 # 编程式导航
 
 除了使用 `<Link>` 定义导航链接，我们还可以借助 `history` 对象的`push`、`replace`、`go`、`goBack`、`goForward`实例方法，通过编写代码来实现导航。

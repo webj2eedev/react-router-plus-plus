@@ -1,8 +1,3 @@
----
-title: API
-order: 7
----
-
 # API
 
 ## Basic
