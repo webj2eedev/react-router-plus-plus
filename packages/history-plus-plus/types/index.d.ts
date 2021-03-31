@@ -51,7 +51,7 @@ export type RedirectOption = RawLocation | ((to: Route) => RawLocation)
 /**
  * NavigationGuard
  */
-export type NavigationGuardNext = (to?: RawLocation | false | void) => void
+export type NavigationGuardNext = (to?: RawLocation | false | void | Error) => void
 export type NavigationGuard = (to: Route, from: Route, next: NavigationGuardNext) => any
 export type AfterNavigationHook = (to: Route, from: Route) => any
 

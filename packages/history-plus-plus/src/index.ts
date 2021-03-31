@@ -1,1 +1,1 @@
-const x = '1';
+export { default as History } from './History'

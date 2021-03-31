@@ -11,9 +11,15 @@ import type {
 import { normalizeBase } from './utils/base'
 import { runQueue } from './utils/async'
 import { START } from './utils/route'
-import { createNavigationAbortedError } from './utils/errors'
+import {
+    createNavigationAbortedError,
+    createNavigationDuplicatedError,
+    createNavigationRedirectedError,
+    createNavigationCancelledError,
+    isError,
+} from './utils/errors'
 
-export class History {
+export default class History {
     base: string
     current: Route
     pending: Route
@@ -104,7 +110,7 @@ export class History {
         this.confirmTransition(route, handleComplete, handleAbort)
     }
 
-    confirmTransition(route: Route, onComplete: TransitionCompleteHandler, onAbort?: TransitionAbortHandler):void {
+    confirmTransition(route: Route, onComplete: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): void {
         const current = this.current
         this.pending = route
 
@@ -117,15 +123,36 @@ export class History {
             this.beforeHooks
         )
 
+        if (false) {
+            return handleAbort(createNavigationDuplicatedError(current, route))
+        }
+
         runQueue<NavigationGuard>(
             queue,
             (hook, next) => {
+                if (this.pending !== route) {
+                    return handleAbort(createNavigationCancelledError(current, route))
+                }
+
                 hook(route, current, (to) => {
                     if (to === false) {
                         handleAbort(createNavigationAbortedError(current, route))
+                    } else if (isError(to)) {
+                        handleAbort(to as Error)
+                    } else if (
+                        typeof to === 'string' ||
+                        (typeof to === 'object' && (typeof to.path === 'string' || typeof to.name === 'string'))
+                    ) {
+                        handleAbort(createNavigationRedirectedError(current, route))
+                        if (typeof to === 'object' && to.replace) {
+                            this.replace(to)
+                        } else {
+                            this.push(to)
+                        }
+                    } else {
+                        next()
                     }
                 })
-                next()
             },
             () => {
                 this.pending = null
@@ -134,7 +161,7 @@ export class History {
         )
     }
 
-    updateRoute(route: Route):void {
+    updateRoute(route: Route): void {
         this.current = route
         this.cb && this.cb(route)
     }
