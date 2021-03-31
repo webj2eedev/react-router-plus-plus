@@ -2,10 +2,24 @@
   "name": "@webj2eedev/react-router-plus-plus",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/react-router-plus-plus.umd.js",
+  "module": "dist/react-router-plus-plus.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/react-router-plus-plus.es.js",
+      "require": "./dist/react-router-plus-plus.umd.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/lodash": "^4.14.168",
+    "lodash": "^4.17.21"
+  }
 }

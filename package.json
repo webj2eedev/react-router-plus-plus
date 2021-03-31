@@ -1,41 +1,13 @@
 {
   "name": "react-router-plus-plus",
   "version": "0.0.1",
+  "private": true,
   "description": "企业级中后台管理系统的增强版ReactRouter",
   "author": "webj2eedev",
-  "keywords": [
-    "react",
-    "react-router",
-    "react-router-dom",
-    "react-router-plus-plus",
-    "cache-route"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/webj2eedev/react-router-plus-plus"
-  },
-  "typings": "types/index.d.ts",
-  "homepage": "https://webj2eedev.github.io/react-router-plus-plus/",
-  "bugs": {
-    "email": "webj2eedev@outlook.com"
-  },
-  "main": "dist/react-router-plus-plus.umd.js",
-  "module": "dist/react-router-plus-plus.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/react-router-plus-plus.es.js",
-      "require": "./dist/react-router-plus-plus.umd.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
     "test": "jest"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/lodash": "^4.14.168",
     "@ungap/url-search-params": "^0.2.2",

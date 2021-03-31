@@ -1,9 +1,6 @@
 {
   "name": "@webj2eedev/history-plus-plus",
-  "version": "0.0.1",
-  "description": "",
-  "typings": "types/index.d.ts",
-  "files": ["dist"],
+  "version": "0.0.2",
   "main": "./dist/history-plus-plus.umd.js",
   "module": "./dist/history-plus-plus.es.js",
   "exports": {
@@ -12,13 +9,30 @@
       "require": "./dist/history-plus-plus.umd.js"
     }
   },
+  "files": ["dist"],
+  "typings": "types/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "test": "jest"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "webj2eedev",
+  "bugs": {
+    "url": "https://github.com/webj2eedev/react-router-plus-plus/issues",
+    "email": "webj2eedev@outlook.com"
+  },
+  "description": "history++",
+  "homepage": "https://webj2eedev.github.io/react-router-plus-plus/",
+  "keywords": [
+      "react",
+      "history",
+      "guard"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webj2eedev/react-router-plus-plus"
+  },
   "devDependencies": {
     "typescript": "^4.2.3",
     "vite": "^2.1.5"
