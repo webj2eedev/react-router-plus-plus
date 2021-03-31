@@ -28,10 +28,9 @@ export class History {
         this.current = START
         this.pending = null
 
-        this.errorCbs = []
-
         this.beforeHooks = []
         this.afterHooks = []
+        this.errorCbs = []
     }
 
     go(n: number): void {
@@ -105,7 +104,7 @@ export class History {
         this.confirmTransition(route, handleComplete, handleAbort)
     }
 
-    confirmTransition(route: Route, onComplete: TransitionCompleteHandler, onAbort?: TransitionAbortHandler) {
+    confirmTransition(route: Route, onComplete: TransitionCompleteHandler, onAbort?: TransitionAbortHandler):void {
         const current = this.current
         this.pending = route
 
@@ -135,7 +134,7 @@ export class History {
         )
     }
 
-    updateRoute(route: Route) {
+    updateRoute(route: Route):void {
         this.current = route
         this.cb && this.cb(route)
     }

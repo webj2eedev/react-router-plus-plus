@@ -2,14 +2,31 @@
   "name": "@webj2eedev/history-plus-plus",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "typings": "types/index.d.ts",
+  "files": ["dist"],
+  "main": "./dist/history-plus-plus.umd.js",
+  "module": "./dist/history-plus-plus.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/history-plus-plus.es.js",
+      "require": "./dist/history-plus-plus.umd.js"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "vite": "^2.1.5"
+  },
+  "dependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
