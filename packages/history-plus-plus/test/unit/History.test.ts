@@ -1,14 +1,14 @@
-import { History } from '../../src'
+import { HTML5History } from '../../src'
 
-describe('History', () => {
+describe('HTML5History', () => {
     test('normalizeBase', async () => {
         const mockOnComplete = jest.fn()
         const mockOnAbort = jest.fn()
         const mockListener = jest.fn()
 
-        const history = new History()
+        const history = new HTML5History()
         history.listen(mockListener)
-        history.confirmTransition(null, mockOnComplete, mockOnAbort);
+        history.transitionTo(null, mockOnComplete, mockOnAbort);
 
         expect(mockOnComplete).toHaveBeenCalledWith(null);
         expect(mockListener).toHaveBeenCalledWith(null);

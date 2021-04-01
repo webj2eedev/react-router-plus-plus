@@ -19,7 +19,7 @@ import {
     isError,
 } from './utils/errors'
 
-export default class History {
+export default class HTML5History {
     base: string
     current: Route
     pending: Route
