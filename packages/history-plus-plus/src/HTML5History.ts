@@ -11,6 +11,8 @@ import type {
 import { normalizeBase } from './utils/base'
 import { runQueue } from './utils/async'
 import { START } from './utils/route'
+import { pushState, replaceState, supportsPushState } from './utils/push-state'
+import { cleanPath } from './utils/path'
 import {
     createNavigationAbortedError,
     createNavigationDuplicatedError,
@@ -39,38 +41,70 @@ export default class HTML5History {
         this.errorCbs = []
     }
 
+    getCurrentLocation(): string {
+        return getLocation(this.base)
+    }
+
     go(n: number): void {
-        console.log(n)
+        window.history.go(n)
     }
-
-    back(): void {
-        console.log(1)
+    back() {
+        this.go(-1)
     }
-
-    forward(): void {
-        console.log(1)
+    forward() {
+        this.go(1)
     }
 
     push(location: RawLocation): Promise<Route>
     push(location: RawLocation, onComplete?: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): void
-    push(
-        location: RawLocation,
-        onComplete?: TransitionCompleteHandler,
-        onAbort?: TransitionAbortHandler
-    ): Promise<Route> {
-        console.log(location, onComplete, onAbort)
-        return null
+    push(location: RawLocation, onComplete?: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): any {
+        if (onComplete == null && onAbort == null) {
+            return new Promise((resolve, reject) => {
+                this.transitionTo(
+                    location,
+                    (route) => {
+                        pushState(cleanPath(this.base + route.fullPath))
+                        resolve && resolve(route)
+                    },
+                    reject
+                )
+            })
+        } else {
+            this.transitionTo(
+                location,
+                (route) => {
+                    pushState(cleanPath(this.base + route.fullPath))
+                    onComplete && onComplete(route)
+                },
+                onAbort
+            )
+        }
     }
 
     replace(location: RawLocation): Promise<Route>
     replace(location: RawLocation, onComplete?: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): void
-    replace(
-        location: RawLocation,
-        onComplete?: TransitionCompleteHandler,
-        onAbort?: TransitionAbortHandler
-    ): Promise<Route> {
-        console.log(location, onComplete, onAbort)
-        return null
+    replace(location: RawLocation, onComplete?: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): any {
+        if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
+            return new Promise((resolve, reject) => {
+                this.transitionTo(
+                    location,
+                    (route) => {
+                        replaceState(cleanPath(this.base + route.fullPath))
+                        resolve && resolve(route)
+                    },
+                    reject
+                )
+            })
+        } else {
+            this.transitionTo(
+                location,
+                (route) => {
+                    replaceState(cleanPath(this.base + route.fullPath))
+                    onComplete && onComplete(route)
+                },
+                onAbort
+            )
+        }
     }
 
     transitionTo(
@@ -166,6 +200,13 @@ export default class HTML5History {
         this.cb && this.cb(route)
     }
 
+    ensureURL (push?: boolean) {
+        if (getLocation(this.base) !== this.current.fullPath) {
+          const current = cleanPath(this.base + this.current.fullPath)
+          push ? pushState(current) : replaceState(current)
+        }
+      }
+
     /**
      * 事件监听
      */
@@ -189,4 +230,12 @@ function registerHook<T>(list: Array<T>, fn: T): () => void {
         const i = list.indexOf(fn)
         if (i > -1) list.splice(i, 1)
     }
+}
+
+function getLocation(base: string): string {
+    let path = window.location.pathname
+    if (base && path.toLowerCase().indexOf(base.toLowerCase()) === 0) {
+        path = path.slice(base.length)
+    }
+    return (path || '/') + window.location.search + window.location.hash
 }

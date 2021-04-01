@@ -15,3 +15,7 @@ export function getFullPath(
 ): string {
     return path + stringify(query) + hash
 }
+
+export function cleanPath(path: string): string {
+    return path.replace(/\/\//g, '/')
+}
