@@ -21,24 +21,65 @@ import {
     isError,
 } from './utils/errors'
 
+import createListenerManager from "./utils/createListenerManager"
+import type {ListenerManager, Listener} from "./utils/createListenerManager"
+
+
 export default class HTML5History {
     base: string
     current: Route
     pending: Route
 
-    cb: (r: Route) => void //
     beforeHooks: Array<NavigationGuard>
     afterHooks: Array<AfterNavigationHook>
     errorCbs: Array<ErrorHandler>
+    private routeChangeListenerManager: ListenerManager<Route>
+    private popstateEventListener: {
+        dispose: Function
+    }
 
     constructor(options?: HistoryOptions) {
         this.base = normalizeBase(options?.basename)
         this.current = START
         this.pending = null
 
+        this.routeChangeListenerManager = createListenerManager<Route>();
         this.beforeHooks = []
         this.afterHooks = []
         this.errorCbs = []
+        this.popstateEventListener = null
+    }
+
+    setup(): void {
+        if (this.popstateEventListener) {
+            return
+        }
+
+        const handleRoutingEvent = () => {
+            // Avoiding first `popstate` event dispatched in some browsers but first
+            // history route not updated since async guard at the same time.
+            const location = getLocation(this.base)
+            if (this.current === START) {
+                return
+            }
+
+            this.transitionTo(location)
+        }
+
+        window.addEventListener('popstate', handleRoutingEvent)
+        this.popstateEventListener = {
+            dispose: () => {
+                window.removeEventListener('popstate', handleRoutingEvent)
+            },
+        }
+    }
+    teardown(): void {
+        this.popstateEventListener.dispose()
+        this.popstateEventListener = null
+
+        // reset current history route
+        this.current = START
+        this.pending = null
     }
 
     getCurrentLocation(): string {
@@ -107,7 +148,7 @@ export default class HTML5History {
         }
     }
 
-    transitionTo(
+    private transitionTo(
         location: RawLocation,
         onComplete?: TransitionCompleteHandler,
         onAbort?: TransitionAbortHandler
@@ -129,6 +170,7 @@ export default class HTML5History {
         const handleComplete: TransitionCompleteHandler = (route: Route) => {
             this.updateRoute(route)
             onComplete && onComplete(route)
+            this.ensureURL()
             // 调用全局的 afterEach 钩子
             this.afterHooks.forEach((hook) => {
                 hook && hook(route, prev)
@@ -144,7 +186,11 @@ export default class HTML5History {
         this.confirmTransition(route, handleComplete, handleAbort)
     }
 
-    confirmTransition(route: Route, onComplete: TransitionCompleteHandler, onAbort?: TransitionAbortHandler): void {
+    private confirmTransition(
+        route: Route,
+        onComplete: TransitionCompleteHandler,
+        onAbort?: TransitionAbortHandler
+    ): void {
         const current = this.current
         this.pending = route
 
@@ -158,6 +204,7 @@ export default class HTML5History {
         )
 
         if (false) {
+            this.ensureURL()
             return handleAbort(createNavigationDuplicatedError(current, route))
         }
 
@@ -170,8 +217,10 @@ export default class HTML5History {
 
                 hook(route, current, (to) => {
                     if (to === false) {
+                        this.ensureURL(true)
                         handleAbort(createNavigationAbortedError(current, route))
                     } else if (isError(to)) {
+                        this.ensureURL(true)
                         handleAbort(to as Error)
                     } else if (
                         typeof to === 'string' ||
@@ -195,23 +244,23 @@ export default class HTML5History {
         )
     }
 
-    updateRoute(route: Route): void {
+    private updateRoute(route: Route): void {
         this.current = route
-        this.cb && this.cb(route)
+        this.routeChangeListenerManager.notifyListeners(route)
     }
 
-    ensureURL (push?: boolean) {
+    private ensureURL(push?: boolean) {
         if (getLocation(this.base) !== this.current.fullPath) {
-          const current = cleanPath(this.base + this.current.fullPath)
-          push ? pushState(current) : replaceState(current)
+            const current = cleanPath(this.base + this.current.fullPath)
+            push ? pushState(current) : replaceState(current)
         }
-      }
+    }
 
     /**
      * 事件监听
      */
-    listen(cb: (r: Route) => void): void {
-        this.cb = cb
+    listen(fn: Listener<Route>): void {
+        this.routeChangeListenerManager.appendListener(fn);
     }
     beforeEach(fn: NavigationGuard): () => void {
         return registerHook<NavigationGuard>(this.beforeHooks, fn)

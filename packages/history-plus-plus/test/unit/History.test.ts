@@ -8,7 +8,7 @@ describe('HTML5History', () => {
 
         const history = new HTML5History()
         history.listen(mockListener)
-        history.transitionTo(null, mockOnComplete, mockOnAbort);
+        history.push(null, mockOnComplete, mockOnAbort);
 
         expect(mockOnComplete).toHaveBeenCalledWith(null);
         expect(mockListener).toHaveBeenCalledWith(null);
